@@ -1,1 +1,2 @@
-# DYPER_GSE36221
+# GSE36221
+Airway gene expression in COPD
