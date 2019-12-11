@@ -11,21 +11,14 @@ suppressPackageStartupMessages(library(GSEABase));
 suppressPackageStartupMessages(library(GSVA));
 
 ### this file could be downloaded form [MsigDB](http://software.broadinstitute.org/gsea/msigdb/collections.jsp#C2).
+### Or load the .RDS file from [data](https://github.com/Chengshu21/DYPER_GSE36221/tree/master/data)
 KEGG_genesetcollection = readRDS("data/KEGG_genesetcollection.rds")
 
-								
 run.gsva = function(matrix, KEGG_genesetcollection){
   
     result.gsva = gsva(as.matrix(matrix), KEGG_genesetcollection, method = "gsva", 
                        mx.diff = FALSE, parallel.sz=1, abs.ranking = FALSE, verbose=TRUE)
-    result.plage = gsva(as.matrix(matrix), KEGG_genesetcollection, method = "plage", 
-                        mx.diff = FALSE, parallel.sz=1, abs.ranking = FALSE, verbose=TRUE)
-    result.ssgsea = gsva(as.matrix(matrix), KEGG_genesetcollection, method = "ssgsea", 
-                         mx.diff = FALSE, parallel.sz=1, abs.ranking = FALSE, verbose=TRUE)
-    result.zscore = gsva(as.matrix(matrix), KEGG_genesetcollection, method = "zscore", 
-                         mx.diff = FALSE, parallel.sz=1, abs.ranking = FALSE, verbose=TRUE)
-    result = list("result.ssgsea" = result.ssgsea, "result.plage" = result.plage, 
-                  "result.gsva" = result.gsva, "result.zscore" = result.zscore)
+    return(result.gsva)
 }
 
 #### all gene set results
@@ -75,14 +68,14 @@ run_limma_gsva = function(exprSet, pdata, contrast){
 ### To check other method, change the result data:
 ### example in "ssgsea": run_limma(gsva.mon0$result.gsva, pdata_mon0, contrast = "tre1-tre0")
 ### mon 0 
-DEgenesets_mon0_tre10 = run_limma_gsva(gsva.mon0$result.gsva, pdata_mon0, contrast = "tre1-tre0")
-DEgenesets_mon0_tre20 = run_limma_gsva(gsva.mon0$result.gsva, pdata_mon0, contrast = "tre2-tre0")
+DEgenesets_mon0_tre10 = run_limma_gsva(gsva.mon0, pdata_mon0, contrast = "tre1-tre0")
+DEgenesets_mon0_tre20 = run_limma_gsva(gsva.mon0, pdata_mon0, contrast = "tre2-tre0")
 ### mon 6 
-DEgenesets_mon6_tre10 = run_limma_gsva(gsva.mon6$result.gsva, pdata_mon6, contrast = "tre1-tre0")
-DEgenesets_mon6_tre20 = run_limma_gsva(gsva.mon6$result.gsva, pdata_mon6, contrast = "tre2-tre0")
+DEgenesets_mon6_tre10 = run_limma_gsva(gsva.mon6, pdata_mon6, contrast = "tre1-tre0")
+DEgenesets_mon6_tre20 = run_limma_gsva(gsva.mon6, pdata_mon6, contrast = "tre2-tre0")
 ### mon 30 
-DEgenesets_mon30_tre10 = run_limma_gsva(gsva.mon30$result.gsva, pdata_mon30, contrast = "tre1-tre0")
-DEgenesets_mon30_tre20 = run_limma_gsva(gsva.mon30$result.gsva, pdata_mon30, contrast = "tre2-tre0")
+DEgenesets_mon30_tre10 = run_limma_gsva(gsva.mon30, pdata_mon30, contrast = "tre1-tre0")
+DEgenesets_mon30_tre20 = run_limma_gsva(gsva.mon30, pdata_mon30, contrast = "tre2-tre0")
 
 
 
@@ -110,9 +103,6 @@ gsva.highlight20_mon30 = head(gsva.tre20_epmon30[order(gsva.tre20_epmon30$P.valu
 
 gsva.tre10 = rbind(gsva.tre10_epmon0, gsva.tre10_epmon6,gsva.tre10_epmon30)
 gsva.tre20 = rbind(gsva.tre20_epmon0, gsva.tre20_epmon6, gsva.tre20_epmon30)
-# write.csv(gsva.tre10, "E:/gsva.tre10.csv")
-# write.csv(gsva.tre20, "E:/gsva.tre20.csv")
-
 
 ### manage and check 
 ### which pathway consider to be significant
@@ -124,8 +114,8 @@ gsva.high20.pathway0 = head(gsva.highlight20_mon0$Term)
 gsva.high20.pathway6 = head(gsva.highlight20_mon6$Term)
 gsva.high20.pathway30 = head(gsva.highlight20_mon30$Term)
 ## gsva.high10.pathway6 have more pathways related to COPD
-## "KEGG_NITROGEN_METABOLISM", "KEGG_ALDOSTERONE_REGULATED_SODIUM_REABSORPTION", "KEGG_SYSTEMIC_LUPUS_ERYTHEMATOSUS"              "KEGG_HOMOLOGOUS_RECOMBINATION"                 
-## "KEGG_T_CELL_RECEPTOR_SIGNALING_PATHWAY", "KEGG_PPAR_SIGNALING_PATHWAY" 
+## "KEGG_NITROGEN_METABOLISM", "KEGG_ALDOSTERONE_REGULATED_SODIUM_REABSORPTION", "KEGG_SYSTEMIC_LUPUS_ERYTHEMATOSUS", 
+## "KEGG_HOMOLOGOUS_RECOMBINATION", "KEGG_T_CELL_RECEPTOR_SIGNALING_PATHWAY", "KEGG_PPAR_SIGNALING_PATHWAY" 
 ## color6 
 ## "Blue", "Green",  "Black", "Purple", "DeepPink","DarkRed"
 ## "lightgrey" means gene sets are out of high.pathway, that is "others"
@@ -163,13 +153,11 @@ gsva.plot.spaghetti = function(data, color){
   plot 
 }
 
-jpeg(file = "plots/gsva.naive1.jpg")
-#pdf(file = "plots/gsva.naive1.pdf")
+pdf(file = "results/plots/gsva.naive1.pdf")
 gsva.p1 = gsva.plot.spaghetti(gsva.t1,color)
 gsva.p1
 dev.off()
-jpeg(file = "plots/gsva.naive2.jpg")
-#pdf(file = "plots/gsva.naive2.pdf")
+pdf(file = "results/plots/gsva.naive2.pdf")
 gsva.p2 = gsva.plot.spaghetti(gsva.t2,color)
 gsva.p2
 dev.off()

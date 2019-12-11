@@ -2,7 +2,7 @@
 # Get GEO data(GSE36221)
 # AUTHOR: Chengshu Xie 
 # Created: Sep.2019
-# Last update: 
+# Last update: Dec, 2019
 # GEO: http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE36221
 # PLATFORM: GPL6244
 ################

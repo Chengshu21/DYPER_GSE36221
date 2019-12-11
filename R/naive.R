@@ -87,8 +87,6 @@ highlight20_mon30 = head(tre20_epmon30[order(tre20_epmon30$P.value,decreasing=FA
 
 tre10 = rbind(tre10_epmon0, tre10_epmon6,tre10_epmon30)
 tre20 = rbind(tre20_epmon0, tre20_epmon6, tre20_epmon30)
-## write.csv(tre10, "~/tre10.csv")
-## write.csv(tre20, "~/tre20.csv")
 ###heatmap data
 ###tre10_t = gather(tre10_tt, "time_point", "P.value", -Term)
 ###tre10_t$time_point = as.numeric(tre10_t$time_point)

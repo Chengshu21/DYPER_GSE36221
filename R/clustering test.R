@@ -100,4 +100,4 @@ jaccard.res_C4_C5 = jaccard_index(clu.gsva.res$C4, clu.gsva.res$C5);
 jaccard.res_C6_C5 = jaccard_index(clu.gsva.res$C6, clu.gsva.res$C5)
 
 
-save.image("E:/COPD_GSE36221/results/clustering test.RData")
+save.image("data/ALL.RData")
