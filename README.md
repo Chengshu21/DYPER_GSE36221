@@ -9,6 +9,6 @@ The R files contain the whoe workflow:
 
 4. Make a clustering test of indivdual patients to compare the similary among sets of them, via ["clustering test.R".](https://github.com/Chengshu21/DYPER_GSE36221/blob/master/R/clustering%20test.R)
 
-
-Please attention:
-**All the data are stored in the ["ALL.RData"](https://github.com/Chengshu21/DYPER_GSE36221/blob/master/data/ALL.RData).**
+Attention:
+  
+  **All the data are stored in the ["ALL.RData"](https://github.com/Chengshu21/DYPER_GSE36221/blob/master/data/ALL.RData).**
